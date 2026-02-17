@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Модуляция изображений</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+        .subtitle {
+            color: #666;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+        .form-group {
+            margin-bottom: 25px;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+            font-weight: 500;
+        }
+        .file-input-wrapper {
+            position: relative;
+            margin-bottom: 10px;
+        }
+        input[type="file"] {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+            z-index: 2;
+        }
+        .file-input-button {
+            background: #f0f0f0;
+            border: 2px dashed #999;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            color: #666;
+            transition: all 0.3s;
+        }
+        .file-input-wrapper:hover .file-input-button {
+            border-color: #667eea;
+            color: #667eea;
+            background: #f8f8ff;
+        }
+        .file-name {
+            font-size: 14px;
+            color: #666;
+            margin-top: 5px;
+        }
+        select, input[type="number"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s;
+        }
+        select:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .captcha-box {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            border: 2px solid #e0e0e0;
+        }
+        button {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+        }
+        .alert {
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+        }
+        .alert-error {
+            background: #fee;
+            color: #c33;
+            border: 1px solid #fcc;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>🎨 Модуляция изображения</h1>
+            <p class="subtitle">Умножение на sin или cos с заданным периодом</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
+            {% endwith %}
+
+            <form action="{{ url_for('process') }}" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label>📁 Выберите изображение</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" name="image" id="image" accept="image/*" required>
+                        <div class="file-input-button">Нажмите для выбора файла</div>
+                    </div>
+                    <div class="file-name" id="file-name">Файл не выбран</div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>📐 Ось</label>
+                        <select name="axis" required>
+                            <option value="x">Горизонтальная (X)</option>
+                            <option value="y">Вертикальная (Y)</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label>📈 Функция</label>
+                        <select name="function" required>
+                            <option value="sin">sin</option>
+                            <option value="cos">cos</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>📏 Период (пиксели)</label>
+                    <input type="number" name="period" min="2" value="80" required>
+                </div>
+
+                <div class="form-group">
+                    <label>🔒 Проверка на робота</label>
+                    <div class="captcha-box">
+                        {{ captcha_question }}
+                    </div>
+                    <input type="number" name="captcha" placeholder="Введите ответ" required style="width: 100%; padding: 12px; border: 2px solid #e0e0e0; border-radius: 10px;">
+                </div>
+
+                <button type="submit">🔄 Обработать изображение</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('image').addEventListener('change', function(e) {
+            const fileName = e.target.files[0] ? e.target.files[0].name : 'Файл не выбран';
+            document.getElementById('file-name').textContent = fileName;
+        });
+    </script>
+</body>
+</html>
