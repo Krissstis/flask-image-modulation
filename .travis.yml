@@ -1,0 +1,20 @@
+language: python
+
+python:
+  - "3.8"
+  - "3.9"
+  - "3.10"
+
+install:
+  - pip install -r requirements.txt
+
+script:
+  - python -m pytest tests/
+
+# Опционально: уведомления на почту
+notifications:
+  email:
+    recipients:
+      - your-email@example.com
+    on_success: never
+    on_failure: always

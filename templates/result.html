@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Результат модуляции изображения</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <div class="card">
+            <h1>Результат обработки</h1>
+
+            <!-- Параметры обработки -->
+            <div class="params-info">
+                <div class="param-badge">
+                    <span class="param-label">Ось модуляции:</span>
+                    <span class="param-value">
+                        {% if axis == 'x' %}Горизонтальная (X){% else %}Вертикальная (Y){% endif %}
+                    </span>
+                </div>
+                <div class="param-badge">
+                    <span class="param-label">Функция:</span>
+                    <span class="param-value">{{ func | upper }}</span>
+                </div>
+                <div class="param-badge">
+                    <span class="param-label">Период:</span>
+                    <span class="param-value">{{ period }} пикселей</span>
+                </div>
+                {% if timestamp_added %}
+                <div class="param-badge timestamp-badge">
+                    <span class="param-label">📅 Временная метка:</span>
+                    <span class="param-value">Добавлена</span>
+                </div>
+                {% endif %}
+            </div>
+
+            <!-- Сравнение изображений -->
+            <div class="image-comparison">
+                <div class="image-card">
+                    <h3>📷 Исходное изображение</h3>
+                    <img src="{{ original }}" alt="Оригинал" class="result-image">
+                    <a href="{{ original }}" download="original.png" class="btn btn-download">
+                        💾 Скачать оригинал
+                    </a>
+                </div>
+
+                <div class="image-card">
+                    <h3>✨ Обработанное изображение</h3>
+                    <img src="{{ modulated }}" alt="Результат" class="result-image">
+                    <a href="{{ modulated }}" download="modulated.png" class="btn btn-download">
+                        💾 Скачать результат
+                    </a>
+                </div>
+            </div>
+
+            <!-- Гистограммы -->
+            <div class="histogram-section">
+                <h3>📊 Гистограммы распределения яркости</h3>
+                <div class="histogram-container">
+                    <img src="data:image/png;base64,{{ histogram }}" alt="Гистограммы" class="histogram-image">
+                </div>
+                <div class="histogram-legend">
+                    <span class="legend-color original-color"></span> Исходное изображение
+                    <span class="legend-color modulated-color"></span> После модуляции
+                </div>
+            </div>
+
+            <!-- Кнопки управления -->
+            <div class="action-buttons">
+                <a href="{{ url_for('index') }}" class="btn btn-primary">
+                    🔄 Обработать другое изображение
+                </a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

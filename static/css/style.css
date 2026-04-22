@@ -1,0 +1,402 @@
+/* ========== ОБЩИЕ СТИЛИ ========== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 40px 20px;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* ========== КАРТОЧКИ ========== */
+.card {
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    border-radius: 30px;
+    padding: 40px;
+    box-shadow: 0 30px 70px rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    animation: fadeIn 0.6s ease-out;
+}
+
+h1 {
+    color: #333;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    text-align: center;
+    font-weight: 600;
+    letter-spacing: -0.5px;
+}
+
+h3 {
+    color: #555;
+    margin-bottom: 20px;
+    font-size: 1.3rem;
+    font-weight: 500;
+}
+
+/* ========== ПАРАМЕТРЫ ОБРАБОТКИ ========== */
+.params-info {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin: 30px 0;
+    padding: 20px;
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+    border-radius: 50px;
+    box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.param-badge {
+    background: white;
+    padding: 12px 30px;
+    border-radius: 40px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    font-size: 1.1rem;
+    transition: transform 0.3s;
+}
+
+.param-badge:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.param-label {
+    color: #666;
+    margin-right: 8px;
+    font-weight: 400;
+}
+
+.param-value {
+    color: #667eea;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+/* Бейдж временной метки */
+.timestamp-badge {
+    background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+}
+
+.timestamp-badge .param-value {
+    color: #d63031;
+}
+
+/* ========== СРАВНЕНИЕ ИЗОБРАЖЕНИЙ ========== */
+.image-comparison {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.image-card {
+    background: #f8f9fa;
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s;
+    animation: fadeIn 0.8s ease-out;
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+}
+
+.image-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.result-image {
+    width: 100%;
+    max-height: 400px;
+    object-fit: contain;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+/* ========== ГИСТОГРАММЫ ========== */
+.histogram-section {
+    margin: 40px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 20px;
+    text-align: center;
+}
+
+.histogram-container {
+    background: white;
+    border-radius: 15px;
+    padding: 20px;
+    margin: 20px 0;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.histogram-image {
+    width: 100%;
+    max-width: 800px;
+    height: auto;
+    margin: 0 auto;
+    display: block;
+}
+
+.histogram-legend {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 15px;
+    font-size: 14px;
+}
+
+.legend-color {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right: 5px;
+    vertical-align: middle;
+}
+
+.legend-color.original-color {
+    background-color: blue;
+}
+
+.legend-color.modulated-color {
+    background-color: red;
+}
+
+/* ========== ФОРМА НА ГЛАВНОЙ СТРАНИЦЕ ========== */
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    color: #555;
+    font-weight: 500;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 15px;
+}
+
+/* Стили для полей ввода */
+input[type="file"] {
+    width: 100%;
+    padding: 10px;
+    border: 2px dashed #ddd;
+    border-radius: 10px;
+    background: #fafafa;
+    cursor: pointer;
+}
+
+input[type="file"]:hover {
+    border-color: #667eea;
+    background: #f8f8ff;
+}
+
+select, input[type="number"] {
+    width: 100%;
+    padding: 12px;
+    border: 2px solid #e0e0e0;
+    border-radius: 10px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+select:focus, input[type="number"]:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+/* Чекбокс для временной метки */
+.checkbox-group {
+    background: #f0f4ff;
+    padding: 15px;
+    border-radius: 10px;
+    margin: 15px 0;
+}
+
+.checkbox-group label {
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.checkbox-group small {
+    display: block;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Капча */
+.captcha-box {
+    background: #f8f9fa;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+    text-align: center;
+    font-size: 20px;
+    font-weight: bold;
+    border: 2px solid #e0e0e0;
+}
+
+.captcha-box input {
+    width: 150px;
+    padding: 8px;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 16px;
+}
+
+/* ========== КНОПКИ ========== */
+button, .btn {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+button:hover, .btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+}
+
+.btn-download {
+    display: inline-block;
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+    margin-top: 10px;
+    text-decoration: none;
+    width: auto;
+    padding: 10px 25px;
+}
+
+.btn-download:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-primary {
+    display: inline-block;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    text-decoration: none;
+    width: auto;
+    padding: 12px 30px;
+    border-radius: 50px;
+}
+
+.action-buttons {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* ========== СООБЩЕНИЯ ОБ ОШИБКАХ ========== */
+.flash-messages {
+    margin-bottom: 20px;
+}
+
+.flash-error {
+    background: #f8d7da;
+    color: #721c24;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #f5c6cb;
+    margin-bottom: 10px;
+}
+
+.flash-success {
+    background: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #c3e6cb;
+    margin-bottom: 10px;
+}
+
+/* ========== АНИМАЦИИ ========== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.image-card:first-child {
+    animation-delay: 0.1s;
+}
+
+.image-card:last-child {
+    animation-delay: 0.3s;
+}
+
+.histogram-section {
+    animation: fadeIn 0.6s ease-out 0.5s both;
+}
+
+/* ========== АДАПТИВНОСТЬ ========== */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 10px;
+    }
+
+    .card {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    .image-comparison {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .params-info {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .param-badge {
+        width: 90%;
+        text-align: center;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .histogram-legend {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .result-image {
+        max-height: 250px;
+    }
+}
